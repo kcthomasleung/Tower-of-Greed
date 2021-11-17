@@ -1,4 +1,27 @@
 from characters import Player
+import user_accounts
+import time
+
+
+def login_screen():
+    print(
+        """
+    Would you like to 
+    1. Login
+    2. Create an account
+    """
+    )
+    user_input = ""
+    while user_input != "1" and user_input != "2":
+        user_input = input("Please select 1, 2: ")
+
+    if user_input == "1":
+        user_accounts.login()
+    else:
+        user_accounts.create_account()
+        introduction()
+        time.sleep(2)
+        create_character()
 
 
 def introduction():
@@ -8,11 +31,10 @@ def introduction():
     Welcome to the Tower of Greed! A place where only the strong will survive,
     and only the strongest will be able to get out of...
 
-    You are a prisoner in this tower 
-    with 100 floors in the middle of the ocean. At each floor there is 
-    a monster guarding the level. You can only advance to the next floor 
-    if you or your team beats the monster. The only way out of the 
-    prison is to be the first person to beat the monster at 100th floor 
+    You are a prisoner in this tower with 100 floors in the middle of the ocean. 
+    At each floor there is  a monster guarding the level. You can only advance 
+    to the next floor if you or your team beats the monster. The only way out 
+    of the prison is to be the first person to beat the monster at 100th floor 
     and take the helicopter out.
 
     """
@@ -22,7 +44,7 @@ def introduction():
 def create_character():
     # could include a feature to rollback selections or exit
 
-    player_name = input("What is your name?")
+    player_name = input("What is your name? ")
     user_gender = ""
 
     while user_gender != "m" and user_gender != "f":
@@ -55,7 +77,7 @@ def create_character():
     # temp = vars(player)
     # for item in temp:
     #     print(item, ":", temp[item])
-
+    print("Character created successfully")
     return player
 
 
@@ -72,4 +94,4 @@ def win_message():
     )
 
 
-create_character()
+# login_screen()
