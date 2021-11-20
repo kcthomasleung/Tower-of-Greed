@@ -2,7 +2,7 @@ from characters import FloorGuardian
 
 
 class Tower:
-    def __init__(self) -> None:
+    def __init__(self):
         self.name = "Tower of Greed"
         self.floors = []
         self.create_floors()
@@ -29,14 +29,15 @@ class Room:
         self.floor_guardian = {}
         self.check_room_type()
         self.set_location_id()
+        self.assign_floor_guardian()
 
     def check_room_type(self):
+        # this method ensures the passed room_type parameter is either "lobby" or "battle" and prints an error otherwise
         if self.room_type != "lobby" and self.room_type != "battle":
             print("Error: Room type invalid")
-        else:
-            pass
 
     def set_location_id(self):
+        # method to set the location_id attribute of each room
         room_type = str
 
         if self.room_type == "lobby":
@@ -48,6 +49,12 @@ class Room:
 
         self.location_id = f"{self.level}{room_type}"
 
+    def assign_floor_guardian(self):
+        # method to assign a floor guardian to every battle room
+        if self.room_type == "battle":
+            self.floor_guardian = FloorGuardian(level=self.level)
+
 
 tower = Tower()
-print(tower.floors[50].battle_room.location_id)
+print(tower.floors[99].battle_room.floor_guardian.name)
+

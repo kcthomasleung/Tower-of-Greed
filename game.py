@@ -13,7 +13,7 @@ def login_screen():
     )
     user_input = ""
     while user_input != "1" and user_input != "2":
-        user_input = input("Please select 1, 2: ")
+        user_input = input("Please select 1 or 2: ")
 
     if user_input == "1":
         user_accounts.login()
@@ -55,9 +55,9 @@ def create_character():
     print("What type of character do you want to be?")
     print(
         """
-    1. Balanced: balanced health points and hitpoints
-    2. Tank: low hitpoints but very high health
-    3. ADC: very high hitpoints but low health
+    1. Balanced: balanced health points and power
+    2. Tank: low power but very high health
+    3. ADC: very high power but low health
     """
     )
     user_input = ""
