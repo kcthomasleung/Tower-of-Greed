@@ -56,5 +56,5 @@ class Room:
 
 
 tower = Tower()
-print(tower.floors[99].battle_room.floor_guardian.name)
+print(tower.floors[99].battle_room.floor_guardian.loot_box.content[0])
 
