@@ -8,6 +8,7 @@ def help():
         look: have a look at what is around you
         health: check your health points
         who: display all the users in the room
+        stats: display game statistics and map of current location
         exit: exit the game
     
     """

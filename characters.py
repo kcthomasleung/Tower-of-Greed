@@ -1,5 +1,5 @@
 import re
-import objects as o
+import objects as obj
 
 
 class Character:
@@ -14,7 +14,6 @@ class Character:
         self.weapon = None
         self.armour = []
         self.inventory = None
-        # self.hp_regen_rate = 0
 
     def total_power(self):
         # This function sums the weapon power and the character power and returns the character's total power
@@ -112,7 +111,7 @@ class Player(Character):
 
         # Add the list of items into a locked loot box
         enemy.player_loot_boxes.append(
-            o.PlayerLootBox(enemy.level, inventory_items, self)
+            obj.PlayerLootBox(enemy.level, inventory_items, self)
         )
         # reset player inventory, location, armour, weapon and stats
         self.inventory = {
@@ -240,7 +239,7 @@ class FloorGuardian(Character):
         self.name = f"Level {self.level} {self.type.capitalize()}"
 
     def set_loot_box(self):
-        self.loot_box = o.LootBox(self.level)
+        self.loot_box = obj.LootBox(self.level)
 
     def restore_hp(self):
         self.hp = 10 ** (self.level / 20) + 3 * self.level
@@ -289,35 +288,35 @@ class FloorGuardian(Character):
 thomas = Player("bigboy69", "Thomas", "ADC")
 rabbit = FloorGuardian("rabbit", "animal", level=1)
 
-thomas.add_to_inventory(o.sword)
-thomas.add_to_inventory(o.baseball_bat)
-thomas.add_to_inventory(o.metal_helmet)
-thomas.add_to_inventory(o.vest)
-thomas.add_to_inventory(o.breast_plate)
-thomas.add_to_inventory(o.gauntlet)
-thomas.add_to_inventory(o.armlet)
-thomas.add_to_inventory(o.cuisse)
-thomas.add_to_inventory(o.health_potion)
+thomas.add_to_inventory(obj.sword)
+thomas.add_to_inventory(obj.baseball_bat)
+thomas.add_to_inventory(obj.metal_helmet)
+thomas.add_to_inventory(obj.vest)
+thomas.add_to_inventory(obj.breast_plate)
+thomas.add_to_inventory(obj.gauntlet)
+thomas.add_to_inventory(obj.armlet)
+thomas.add_to_inventory(obj.cuisse)
+thomas.add_to_inventory(obj.health_potion)
 
-thomas.equip(o.sword)
-thomas.equip(o.metal_helmet)
-thomas.equip(o.breast_plate)
-thomas.equip(o.gauntlet)
-thomas.equip(o.armlet)
-thomas.equip(o.cuisse)
+thomas.equip(obj.sword)
+thomas.equip(obj.metal_helmet)
+thomas.equip(obj.breast_plate)
+thomas.equip(obj.gauntlet)
+thomas.equip(obj.armlet)
+thomas.equip(obj.cuisse)
 
 
-player_loot_box1 = o.PlayerLootBox(1, [o.metal_helmet, o.scarf, o.vest], thomas)
+player_loot_box1 = obj.PlayerLootBox(1, [obj.metal_helmet, obj.scarf, obj.vest], thomas)
 # print(player_loot_box1)
 
 # print(thomas.total_armour())
 # print(rabbit)
 # # print(thomas.weapon)
-print(thomas)
+# print(thomas)
 
-print(rabbit)
-print(thomas)
-print(thomas.inventory)
-rabbit.attack(thomas)
-thomas.attack(rabbit)
-print(thomas.inventory)
+# print(rabbit)
+# print(thomas)
+# print(thomas.inventory)
+# # rabbit.attack(thomas)
+# # thomas.attack(rabbit)
+# print(thomas.inventory)

@@ -1,22 +1,24 @@
+import re
+
+
 class Item:
     def __init__(self, name, type):
         self.id = ""
         self.name = name
         self.type = type
-        self.heal = None
-        self.defence = None
-        self.power = None
-
+        self.heal = float
+        self.defence = float
+        self.power = float
 
     def set_id(self):
         # this method gives each item an item id based on their type, name, and stats
         item_name = self.name
-        id_name = item_name.replace(" ","")
+        id_name = item_name.replace(" ", "")
 
         if self.type == "weapon":
             self.id = f"we{id_name}{self.power}"
         elif self.type == "armour":
-            self.id = f"ar{id_name}{self.defence}"
+            self.id = f"ar{id_name}{self.defence}{self.body_part}"
         elif self.type == "potion":
             self.id = f"po{id_name}{self.heal}"
         else:
@@ -25,24 +27,42 @@ class Item:
 
 class Weapon(Item):
     def __init__(self, name, power, type="weapon"):
-        super().__init__( name, type)
+        super().__init__(name, type)
         self.power = power
         self.set_id()
 
     def __str__(self):
-        return(f'''ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Power: {self.power}
-        ''')
+        return f"""ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Power: {self.power}
+        """
+
 
 class Armour(Item):
     def __init__(self, name, defence, body_part, type="armour"):
         super().__init__(name, type)
         self.defence = defence
-        self.body_part = body_part
+        self.body_part = ""
+        self.set_body_part(body_part)
         self.set_id()
 
+    def set_body_part(self, body_part):
+        # this method ensures the passed body_part parameter is valid, and will raise an error otherwise
+        if (
+            body_part != "head"
+            and body_part != "neck"
+            and body_part != "torso"
+            and body_part != "arm"
+            and body_part != "hand"
+            and body_part != "leg"
+        ):
+            raise Exception("Body part of armour invalid")
+
+        else:
+            self.body_part = body_part
+
     def __str__(self):
-        return(f'''ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Defence Power: {self.defence}
-        ''')
+        return f"""ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Defence Power: {self.defence}
+        """
+
 
 class Potion(Item):
     def __init__(self, name, type="potion"):
@@ -51,8 +71,8 @@ class Potion(Item):
         self.set_id()
 
     def __str__(self):
-        return(f'''ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Heal Power: {self.heal}
-        ''')
+        return f"""ID: {self.id}    Type: {self.type.capitalize()}   Name: {self.name}   Heal Power: {self.heal}
+        """
 
 
 class LootBox:
@@ -67,24 +87,25 @@ class LootBox:
         self.id = f"{self.level}"
 
     def set_default_content(self):
+        # this method sets the default content of each lootbox according to the level they are at
         if self.level % 5 == 0:
-            weapon_power = 2 ** (self.level/7) + 3 * self.level
+            weapon_power = 2 ** (self.level / 7) + 3 * self.level
             weapon = Weapon(f"Level {self.level} Sword", weapon_power)
             self.content = [weapon]
         else:
-            armour_defence = 2 ** (self.level/6.3) + 3 * self.level
+            armour_defence = 2 ** (self.level / 6.3) + 3 * self.level
             armour = Armour(f"Level {self.level} Armour", armour_defence, "torso")
             self.content = [armour]
 
     def __str__(self):
-        return f'''
+        return f"""
     ID: {self.id}
-    Contents: {self.content}'''
+    Contents: {self.content}"""
 
 
-class PlayerLootBox():
+class PlayerLootBox:
     # This class is a player specific loot box. Only players with the certain username will be able to open this loot box
-    def __init__(self, level, content,  player):
+    def __init__(self, level, content, player):
         self.id = ""
         self.level = level
         self.content = content
@@ -95,9 +116,45 @@ class PlayerLootBox():
         self.id = f"{self.level}{self.player.username}"
 
     def __str__(self):
-        return f'''
+        return f"""
     ID: {self.id}
-    Contents: {self.content}'''
+    Contents: {self.content}"""
+
+
+def create_item_with_id(id):
+    # This method is to make creating items in the game easier by just passing in a item id
+
+    # find the item_type of the item (identified by the first two characters of the item id)
+    item_type = id[:2]
+
+    # find the item stat of the item (the only numbers in item ids)
+    item_stat = "".join(
+        filter(lambda i: i.isdigit(), id)
+    )  # source: https://www.kite.com/python/answers/how-to-extract-integers-from-a-string-in-python
+
+    # find the item name from the item id (in between item_type and item_stat)
+    item_name = id[
+        id.find(item_type) + len(item_type) : id.rfind(item_stat)
+    ]  # source: https://stackoverflow.com/questions/3368969/find-string-between-two-substrings
+
+    # add spaces between capitalised letters for the item name
+    spaced_name = re.sub(
+        r"(\w)([A-Z])", r"\1 \2", item_name
+    )  # source: https://stackoverflow.com/questions/199059/a-pythonic-way-to-insert-a-space-before-capital-letters
+
+    if item_type == "we":
+        weapon = Weapon(spaced_name, float(item_stat))
+        return weapon
+    elif item_type == "ar":
+        # each armour has a specific body_part it corresponds to. The following line is to find out the body_part of the armour using the item id
+        item_body_part = id.split(f"{item_stat}")[1]
+        armour = Armour(spaced_name, int(item_stat), item_body_part)
+        return armour
+    elif item_type == "po":
+        potion = Potion(spaced_name)
+        return potion
+    else:
+        print("Error: item id invalid")
 
 
 
@@ -114,7 +171,21 @@ cuisse = Armour("Cuisse", 90, "leg")
 
 health_potion = Potion("Health Potion")
 
-# print(sword.name, sword.type, sword.id)
+# print(health_potion)
 
-# loot_box1 = LootBox(5)
-# print(loot_box1.content[0])
+loot_box1 = LootBox(5)
+# print(loot_box1)
+
+
+# item_type = metal_helmet.id[:2]
+# item_stat = ''.join(filter(lambda i: i.isdigit(), metal_helmet.id))
+# item_name = metal_helmet.id[metal_helmet.id.find(item_type)+len(item_type):metal_helmet.id.rfind(item_stat)]
+# item_body_part = metal_helmet.id.split(f"{item_stat}")[1]
+
+# better_name = re.sub(r"(\w)([A-Z])", r"\1 \2", item_name)
+
+# print(item_name)
+# print(better_name)
+
+# armour = create_item_with_id("poHealthPotion100")
+# print(armour)
