@@ -28,7 +28,7 @@ class Item:
 class Weapon(Item):
     def __init__(self, name, power, type="weapon"):
         super().__init__(name, type)
-        self.power = power
+        self.power = float(power)
         self.set_id()
 
     def __str__(self):
@@ -39,7 +39,7 @@ class Weapon(Item):
 class Armour(Item):
     def __init__(self, name, defence, body_part, type="armour"):
         super().__init__(name, type)
-        self.defence = defence
+        self.defence = float(defence)
         self.body_part = ""
         self.set_body_part(body_part)
         self.set_id()
@@ -67,7 +67,7 @@ class Armour(Item):
 class Potion(Item):
     def __init__(self, name, type="potion"):
         super().__init__(name, type)
-        self.heal = 100
+        self.heal = float(100)
         self.set_id()
 
     def __str__(self):
@@ -89,11 +89,11 @@ class LootBox:
     def set_default_content(self):
         # this method sets the default content of each lootbox according to the level they are at
         if self.level % 5 == 0:
-            weapon_power = 2 ** (self.level / 7) + 3 * self.level
+            weapon_power = round(2 ** (self.level / 7) + 3 * self.level, 2)
             weapon = Weapon(f"Level {self.level} Sword", weapon_power)
             self.content = [weapon]
         else:
-            armour_defence = 2 ** (self.level / 6.3) + 3 * self.level
+            armour_defence = round(2 ** (self.level / 6.3) + 3 * self.level, 2)
             armour = Armour(f"Level {self.level} Armour", armour_defence, "torso")
             self.content = [armour]
 
@@ -127,10 +127,10 @@ def create_item_with_id(id):
     # find the item_type of the item (identified by the first two characters of the item id)
     item_type = id[:2]
 
-    # find the item stat of the item (the only numbers in item ids)
-    item_stat = "".join(
-        filter(lambda i: i.isdigit(), id)
-    )  # source: https://www.kite.com/python/answers/how-to-extract-integers-from-a-string-in-python
+    # find the item stat of the item (the only floats in item ids)
+    item_stat = re.findall("[+-]?\d+\.\d+", id)[
+        0
+    ]  # source: https://stackoverflow.com/questions/44939027/how-to-find-a-float-in-a-string-python
 
     # find the item name from the item id (in between item_type and item_stat)
     item_name = id[
@@ -148,14 +148,13 @@ def create_item_with_id(id):
     elif item_type == "ar":
         # each armour has a specific body_part it corresponds to. The following line is to find out the body_part of the armour using the item id
         item_body_part = id.split(f"{item_stat}")[1]
-        armour = Armour(spaced_name, int(item_stat), item_body_part)
+        armour = Armour(spaced_name, item_stat, item_body_part)
         return armour
     elif item_type == "po":
         potion = Potion(spaced_name)
         return potion
     else:
         print("Error: item id invalid")
-
 
 
 sword = Weapon("Sword", 100)
@@ -178,13 +177,15 @@ loot_box1 = LootBox(5)
 
 
 # item_type = metal_helmet.id[:2]
-# item_stat = ''.join(filter(lambda i: i.isdigit(), metal_helmet.id))
-# item_name = metal_helmet.id[metal_helmet.id.find(item_type)+len(item_type):metal_helmet.id.rfind(item_stat)]
+# item_stat = re.findall("[+-]?\d+\.\d+", metal_helmet.id)[0]
+# item_name = metal_helmet.id[
+#     metal_helmet.id.find(item_type) + len(item_type) : metal_helmet.id.rfind(item_stat)
+# ]
 # item_body_part = metal_helmet.id.split(f"{item_stat}")[1]
 
 # better_name = re.sub(r"(\w)([A-Z])", r"\1 \2", item_name)
-
-# print(item_name)
+# print(metal_helmet)
+# print(item_stat)
 # print(better_name)
 
 # armour = create_item_with_id("poHealthPotion100")

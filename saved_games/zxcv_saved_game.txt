@@ -1,0 +1,7 @@
+username,name,type,hp,power,gender,weapon,current_location,floor_access 
+zxcv,zxcv,ADC,36.4360858811511,10.0,M,weFists1.0,5a,5 
+equipped armour: 
+-------------inventory------------
+weapon: 
+armour: arLevel1Armour4.12torso,arLevel2Armour7.25torso,arLevel3Armour10.39torso,arLevel4Armour13.55torso
+potion: 

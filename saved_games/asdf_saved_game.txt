@@ -1,0 +1,7 @@
+username,name,type,hp,power,gender,weapon,current_location,floor_access 
+asdf,asdf,ADC,50,10,m,weFists1.0,2a,6 
+equipped armour: 
+-------------inventory------------
+weapon: 
+armour: arLevel1Armour4.12torso
+potion: 

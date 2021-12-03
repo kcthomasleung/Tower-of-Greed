@@ -1,7 +1,7 @@
 username,name,type,hp,power,gender,weapon,current_location,floor_access 
-bigboy69,Thomas,ADC,50,10,M,weSword100,1a,1 
-equipped armour: arMetalHelmet50head,arBreastPlate150torso,arGauntlet60hand,arArmlet90arm,arCuisse90leg
+bigboy69,Thomas,ADC,50.0,10.0,M,weSword100.0,3a,3 
+equipped armour: arLevel1MetalHelmet50.654321head,arBreastPlate150.0torso,arGauntlet60.0hand,arArmlet90.0arm,arCuisse90.0leg
 -------------inventory------------
-weapon: weSword100,weBaseballBat15
-armour: arMetalHelmet50head,arVest70torso,arBreastPlate150torso,arGauntlet60hand,arArmlet90arm,arCuisse90leg
-potion: poHealthPotion100
+weapon: weSword100.0,weBaseballBat15.0
+armour: arLevel1MetalHelmet50.654321head,arVest70.0torso,arBreastPlate150.0torso,arGauntlet60.0hand,arArmlet90.0arm,arCuisse90.0leg,arLevel1Armour4.12torso,arLevel2Armour7.25torso
+potion: poHealthPotion100.0

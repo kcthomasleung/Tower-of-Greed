@@ -1,5 +1,5 @@
 import re
-import objects as obj
+import modules.objects as obj
 
 
 class Character:
@@ -42,6 +42,7 @@ class Character:
         else:
             print(f"{self.name} took {damage} damage from {enemy.name}")
             print(f"{self.name}'s current health is {self.hp}")
+            print("-----------------------------------------------------")
 
     def attack(self, enemy):
         # This method manages events when a character attacks another
@@ -75,7 +76,8 @@ class Player(Character):
         self.initial_stats()
 
     def initial_stats(self):
-        # This function takes the player type and determines their initial hp
+        # This function takes the player type and determines their initial hp and sets their initial weapon to fists
+        self.weapon = obj.Weapon("Fists", 1)
 
         if self.type == "Balanced":
             self.hp = 100
@@ -126,6 +128,14 @@ class Player(Character):
 
         print(
             f"You have been killed by {enemy.name}! All your inventory has been taken by {enemy.name}! Defeat {enemy.name} next time to retrieve your inventory"
+        )
+
+    def display_inventory(self):
+        # method to display the player's current inventory to the player
+        print(
+            f"""
+        Weapons: 
+        """
         )
 
     def add_to_inventory(self, item):
@@ -269,6 +279,10 @@ class FloorGuardian(Character):
                 f"You have received {item.name} as a reward for defeating {self.name}"
             )
 
+        # Change player location to the next level lobby
+        enemy.current_location = f"{self.level + 1}a"
+        print(f"You have entered level {self.level + 1} lobby")
+
         self.restore_hp()
 
     def __str__(self):
@@ -282,7 +296,6 @@ class FloorGuardian(Character):
         Gender: {self.gender}
         Player Loot Boxes: {self.player_loot_boxes}
         """
-
 
 
 thomas = Player("bigboy69", "Thomas", "ADC")

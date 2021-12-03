@@ -1,4 +1,4 @@
-from characters import FloorGuardian
+from modules.characters import FloorGuardian
 
 
 class Tower:
@@ -56,5 +56,5 @@ class Room:
 
 
 tower = Tower()
-print(tower.floors[99].battle_room.floor_guardian.loot_box.content[0])
+# print(tower.floors[99].battle_room.floor_guardian.loot_box.content[0])
 
