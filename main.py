@@ -21,7 +21,13 @@ if __name__ == "__main__":
         user_input = input().lower()
 
         if user_input == "exit":
-            break
+            print("Would you like to save game before you leave? (y/n)")
+            response = input()
+            if response == "n":
+                break
+            elif response == "y":
+                commands.save(player)
+                break
 
         elif user_input == "stats":
             commands.stats(player)
@@ -29,9 +35,9 @@ if __name__ == "__main__":
         elif user_input == "help":
             commands.help()
 
-        # elif user_input == "inventory":
-        #     commands.help()
-        #
+        elif user_input == "inventory":
+            commands.inventory(player)
+
         elif user_input == "battle":
             commands.battle(player, tower)
 
@@ -41,6 +47,11 @@ if __name__ == "__main__":
         elif user_input == "save":
             commands.save(player)
 
+        elif user_input == "equip":
+            commands.equip(player)
+
+        elif user_input == "equipments":
+            commands.equipments(player)
         else:
             print("Command not recognised, please type 'help' for available commands")
 

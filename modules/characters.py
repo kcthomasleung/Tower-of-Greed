@@ -132,11 +132,20 @@ class Player(Character):
 
     def display_inventory(self):
         # method to display the player's current inventory to the player
-        print(
-            f"""
-        Weapons: 
-        """
-        )
+        # Loop through inventory weapon list and print each item out
+        print("______________________Weapons__________________________________________________________________")
+        for item in self.inventory["weapon"]:
+            print(item)
+
+        #same for armour and potion
+        print("______________________Armour___________________________________________________________________")
+        for item in self.inventory["armour"]:
+            print(item)
+
+        print("______________________Potions__________________________________________________________________")
+        for item in self.inventory["potion"]:
+            print(item)
+
 
     def add_to_inventory(self, item):
         if item.type == "weapon":
@@ -198,6 +207,13 @@ class Player(Character):
 
             else:
                 print("Error: Invalid item type")
+
+    def display_equipments(self):
+        print(f"Weapon: ")
+        print(f"{self.weapon}")
+        print(f"Armour: ")
+        for item in self.armour:
+            print(item)
 
     def disarm_weapon(self):
         self.weapon = {}
@@ -298,28 +314,28 @@ class FloorGuardian(Character):
         """
 
 
-thomas = Player("bigboy69", "Thomas", "ADC")
-rabbit = FloorGuardian("rabbit", "animal", level=1)
-
-thomas.add_to_inventory(obj.sword)
-thomas.add_to_inventory(obj.baseball_bat)
-thomas.add_to_inventory(obj.metal_helmet)
-thomas.add_to_inventory(obj.vest)
-thomas.add_to_inventory(obj.breast_plate)
-thomas.add_to_inventory(obj.gauntlet)
-thomas.add_to_inventory(obj.armlet)
-thomas.add_to_inventory(obj.cuisse)
-thomas.add_to_inventory(obj.health_potion)
-
-thomas.equip(obj.sword)
-thomas.equip(obj.metal_helmet)
-thomas.equip(obj.breast_plate)
-thomas.equip(obj.gauntlet)
-thomas.equip(obj.armlet)
-thomas.equip(obj.cuisse)
-
-
-player_loot_box1 = obj.PlayerLootBox(1, [obj.metal_helmet, obj.scarf, obj.vest], thomas)
+# thomas = Player("bigboy69", "Thomas", "ADC")
+# rabbit = FloorGuardian("rabbit", "animal", level=1)
+#
+# thomas.add_to_inventory(obj.sword)
+# thomas.add_to_inventory(obj.baseball_bat)
+# thomas.add_to_inventory(obj.metal_helmet)
+# thomas.add_to_inventory(obj.vest)
+# thomas.add_to_inventory(obj.breast_plate)
+# thomas.add_to_inventory(obj.gauntlet)
+# thomas.add_to_inventory(obj.armlet)
+# thomas.add_to_inventory(obj.cuisse)
+# thomas.add_to_inventory(obj.health_potion)
+#
+# thomas.equip(obj.sword)
+# thomas.equip(obj.metal_helmet)
+# thomas.equip(obj.breast_plate)
+# thomas.equip(obj.gauntlet)
+# thomas.equip(obj.armlet)
+# thomas.equip(obj.cuisse)
+# thomas.display_inventory()
+#
+# player_loot_box1 = obj.PlayerLootBox(1, [obj.metal_helmet, obj.scarf, obj.vest], thomas)
 # print(player_loot_box1)
 
 # print(thomas.total_armour())

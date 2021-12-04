@@ -10,7 +10,7 @@ def help():
     Available commands:
 
         inventory: check your inventory
-        level: check you current floor level
+        equipments: check your equipped items
         location: check your current location
         battle: battle the floor guardian of your current level
         look: have a look at what is around you
@@ -91,8 +91,57 @@ def save(player):
     save_player(player)
 
 
-# def inventory(player):
+def inventory(player):
+    player.display_inventory()
 
+
+def equip(player):
+    # Find the item object with the corresponding item id specified by the user in their inventory
+    print("Please enter the item ID you would like to equip")
+    item_obj = ""
+    user_input = input("item ID: ")
+    # check if the user input is in the correct format for item ids
+    while user_input[:2] != "we" and user_input[:2] != "ar" and user_input[:2] != "po":
+        if user_input == "exit":
+            break
+        print("Error: Item ID invalid. Please enter a valid item id")
+        user_input = input("item ID: ")
+
+    # set item_id equal to the user input if the format is correct
+    item_id = user_input
+    item_type = item_id[:2]
+
+    if item_type == "we":
+        for item in player.inventory["weapon"]:
+            if item_id == item.id:
+                item_obj = item
+                break
+
+    elif item_type == "ar":
+        for item in player.inventory["armour"]:
+            if item_id == item.id:
+                item_obj = item
+                break
+
+    elif item_type == "po":
+        for item in player.inventory["potion"]:
+            if item_id == item.id:
+                item_obj = item
+                break
+
+    else:
+        print("Error: item id invalid")
+
+    if item_obj == "":
+        # if the loop ended without finding the match, then print cannot find item
+        print("Cannot find item in your inventory")
+
+    player.equip(item_obj)
+    print("You have successfully equipped this item")
+
+
+def equipments(player):
+    player.display_equipments()
 
 # def map()
 
@@ -101,4 +150,6 @@ def save(player):
 
 # tower = tower.Tower()
 # player = characters.Player("bigboy69", "Thomas", "ADC")
+# print(player)
+# equip(player)
 # battle(player)

@@ -1,11 +1,9 @@
+import json
 
 
-user_accounts = [
-    {"username": "asdf", "user_password": "asdf"},
-    {"username": "qwer", "user_password": "qwer"},
-    {"username": "bigboy69", "user_password": "asdf"},
-    {"username": "zxcv", "user_password": "zxcv"}
-]
+with open("./resources/user_account_data.json") as file_object:
+    # note that this directory is relative to main.py. Need to change path if ran from another file
+    user_accounts = json.load(file_object)
 
 # create account function returns the username of the account created
 def create_account():
@@ -34,10 +32,15 @@ def create_account():
     user_password = input("Enter Password:")
     user_account_info = {"username": username, "user_password": user_password}
 
-    # add user account details into a dictionary
+    # add user account details into the user_accounts list of dictionaries
     user_accounts.append(user_account_info)
 
+    # dump the user_accounts list of dictionaries
+    with open("./resources/user_account_data.json", "w") as file_object:
+        json.dump(user_accounts, file_object)
+
     return user_account_info["username"]
+
 
 # login function returns the username
 def login():
