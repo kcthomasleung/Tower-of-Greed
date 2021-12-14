@@ -1,4 +1,5 @@
 import re
+from rich import print
 
 
 class Item:
@@ -170,23 +171,8 @@ cuisse = Armour("Cuisse", 90, "leg")
 
 health_potion = Potion("Health Potion")
 
-# print(health_potion)
-
 loot_box1 = LootBox(5)
-# print(loot_box1)
 
 
-# item_type = metal_helmet.id[:2]
-# item_stat = re.findall("[+-]?\d+\.\d+", metal_helmet.id)[0]
-# item_name = metal_helmet.id[
-#     metal_helmet.id.find(item_type) + len(item_type) : metal_helmet.id.rfind(item_stat)
-# ]
-# item_body_part = metal_helmet.id.split(f"{item_stat}")[1]
 
-# better_name = re.sub(r"(\w)([A-Z])", r"\1 \2", item_name)
-# print(metal_helmet)
-# print(item_stat)
-# print(better_name)
 
-# armour = create_item_with_id("poHealthPotion100")
-# print(armour)

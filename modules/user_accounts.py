@@ -1,4 +1,7 @@
 import json
+from rich.console import Console
+
+console = Console()
 
 
 with open("./resources/user_account_data.json") as file_object:
@@ -58,9 +61,9 @@ def login():
         print(
             "Username not found, please enter a valid username or create a new account"
         )
+        login()
 
     elif username_exists == True:
-        print("found username")
         user_password_input = input("Enter Password:")
         tries = 3
         while user_password_input != user_accounts[i]["user_password"]:
@@ -71,7 +74,7 @@ def login():
             print(f"Password Incorrect, you have {tries} left")
             user_password_input = input("Enter Password:")
         else:
-            print("You have logged in successfully")
+            console.print("You have logged in successfully:thumbs_up:")
 
         return username_input
 

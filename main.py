@@ -1,9 +1,7 @@
 import modules.game as game
-from modules.save_load import save_player
 import modules.tower as tower
 import modules.commands as commands
-from modules.characters import Player
-import modules.objects as obj
+
 
 
 if __name__ == "__main__":
@@ -14,7 +12,7 @@ if __name__ == "__main__":
     print(
         """
     Game loaded successfully, please input commands.
-    (type help to see a list of command available)"""
+    (type help to see a list of commands available)"""
     )
 
     while True:
@@ -52,30 +50,9 @@ if __name__ == "__main__":
 
         elif user_input == "equipments":
             commands.equipments(player)
+
+        elif user_input == "health":
+            commands.health(player)
+
         else:
             print("Command not recognised, please type 'help' for available commands")
-
-
-# thomas = Player("zxcv", "zxcv", "ADC")
-
-
-# thomas.add_to_inventory(obj.sword)
-# thomas.add_to_inventory(obj.baseball_bat)
-# thomas.add_to_inventory(obj.metal_helmet)
-# thomas.add_to_inventory(obj.vest)
-# thomas.add_to_inventory(obj.breast_plate)
-# thomas.add_to_inventory(obj.gauntlet)
-# thomas.add_to_inventory(obj.armlet)
-# thomas.add_to_inventory(obj.cuisse)
-# thomas.add_to_inventory(obj.health_potion)
-
-# thomas.equip(obj.sword)
-# thomas.equip(obj.metal_helmet)
-# thomas.equip(obj.breast_plate)
-# thomas.equip(obj.gauntlet)
-# thomas.equip(obj.armlet)
-# thomas.equip(obj.cuisse)
-
-# save_player(thomas)
-
-# commands.save(thomas)

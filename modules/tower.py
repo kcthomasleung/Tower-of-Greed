@@ -1,4 +1,5 @@
 from modules.characters import FloorGuardian
+from rich import print
 
 
 class Tower:
@@ -53,8 +54,4 @@ class Room:
         # method to assign a floor guardian to every battle room
         if self.room_type == "battle":
             self.floor_guardian = FloorGuardian(level=self.level)
-
-
-tower = Tower()
-# print(tower.floors[99].battle_room.floor_guardian.loot_box.content[0])
 

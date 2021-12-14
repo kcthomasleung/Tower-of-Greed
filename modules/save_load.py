@@ -1,12 +1,6 @@
 from modules.characters import Player
 import modules.objects as obj
-
-# from characters import Player
-# import objects as obj
-
-
-# print(thomas)
-
+from rich import print
 
 def save_player(player):
 
@@ -156,7 +150,3 @@ def load_player(username):
         print(
             "No saved game file found for this account. Try logging in to another account or start a new game"
         )
-        # return FileNotFoundError
-
-
-# print(load_player("bigboy69"))

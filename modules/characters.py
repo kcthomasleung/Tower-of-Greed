@@ -1,6 +1,9 @@
 import re
 import modules.objects as obj
+# use this following library for better console outputs
+from rich.console import Console
 
+console = Console()
 
 class Character:
     # This class is to create game characters (i.e. player and monsters)
@@ -36,12 +39,12 @@ class Character:
         # This function handles when a character takes damage from another character
         self.hp -= damage
         if self.hp <= 0:
-            print(f"{self.name} took {damage} damage from {enemy.name}")
+            console.print(f"{self.name} took [red]{damage}[/] damage from {enemy.name}")
             print(f"{self.name} have died")
             self.die(enemy)
         else:
-            print(f"{self.name} took {damage} damage from {enemy.name}")
-            print(f"{self.name}'s current health is {self.hp}")
+            console.print(f"{self.name} took [red]{damage}[/] damage from {enemy.name}")
+            console.print(f"{self.name}'s current health is [green]{self.hp}[/]")
             print("-----------------------------------------------------")
 
     def attack(self, enemy):
@@ -99,7 +102,7 @@ class Player(Character):
 
         # Check if the player is allowed to travel to the destination passed
         if floor_level > self.floor_access:
-            print("You do not have access to this level")
+            console.print("You do not have access to this level", style='red')
         else:
             self.current_location = destination
 
@@ -126,23 +129,23 @@ class Player(Character):
         self.armour = []
         self.initial_stats()
 
-        print(
-            f"You have been killed by {enemy.name}! All your inventory has been taken by {enemy.name}! Defeat {enemy.name} next time to retrieve your inventory"
+        console.print(
+            f":skull_and_crossbones:You have been killed by {enemy.name}! All your inventory has been taken by {enemy.name}! Defeat {enemy.name} next time to retrieve your inventory!"
         )
 
     def display_inventory(self):
         # method to display the player's current inventory to the player
         # Loop through inventory weapon list and print each item out
-        print("______________________Weapons__________________________________________________________________")
+        console.print("______________________:crossed_swords: Weapons :crossed_swords:__________________________________________________________________")
         for item in self.inventory["weapon"]:
             print(item)
 
         #same for armour and potion
-        print("______________________Armour___________________________________________________________________")
+        console.print("______________________:shield:  Armour :shield: ___________________________________________________________________")
         for item in self.inventory["armour"]:
             print(item)
 
-        print("______________________Potions__________________________________________________________________")
+        console.print("______________________:wine_glass: Potions :wine_glass:__________________________________________________________________")
         for item in self.inventory["potion"]:
             print(item)
 
@@ -155,7 +158,7 @@ class Player(Character):
         elif item.type == "potion":
             self.inventory["potion"].append(item)
         else:
-            print("Error: Item type invalid")
+            console.print("Error: Item type invalid", style='red')
 
     def equip(self, item):
         # This function takes an item object as a parameter and adds it to the player's equipment
@@ -166,7 +169,7 @@ class Player(Character):
             and not any(armour.id == item.id for armour in self.inventory["armour"])
             and not any(potion.id == item.id for potion in self.inventory["potion"])
         ):
-            print("You do not have this item")
+            console.print("You do not have this item", style='red')
 
         else:
             # Equip weapon
@@ -208,10 +211,13 @@ class Player(Character):
             else:
                 print("Error: Invalid item type")
 
+    def display_health(self):
+        console.print(f"Current health: [green]{self.hp}[/]")
+
     def display_equipments(self):
-        print(f"Weapon: ")
+        console.print(f":crossed_swords: Weapons :crossed_swords:---------------------------------------- ")
         print(f"{self.weapon}")
-        print(f"Armour: ")
+        console.print(f":shield:  Armour :shield:------------------------------------------------- ")
         for item in self.armour:
             print(item)
 
@@ -276,7 +282,7 @@ class FloorGuardian(Character):
         if enemy.floor_access == self.level:
             enemy.floor_access = self.level + 1
 
-        print(f"You have defeated {self.name}!")
+        console.print(f"[green]You have defeated {self.name}![/]")
 
         # Check if they Floor Guardian has a player_loot_box for the player that just defeated it
         for i in range(len(self.player_loot_boxes)):
@@ -291,13 +297,13 @@ class FloorGuardian(Character):
         # Reward the player with the loot box contents
         for item in self.loot_box.content:
             enemy.add_to_inventory(item)
-            print(
-                f"You have received {item.name} as a reward for defeating {self.name}"
+            console.print(
+                f"You have received [yellow]{item.name}[/] as a reward for defeating {self.name}"
             )
 
         # Change player location to the next level lobby
         enemy.current_location = f"{self.level + 1}a"
-        print(f"You have entered level {self.level + 1} lobby")
+        console.print(f"You have entered [blue]level {self.level + 1} lobby[/]")
 
         self.restore_hp()
 
@@ -312,40 +318,3 @@ class FloorGuardian(Character):
         Gender: {self.gender}
         Player Loot Boxes: {self.player_loot_boxes}
         """
-
-
-# thomas = Player("bigboy69", "Thomas", "ADC")
-# rabbit = FloorGuardian("rabbit", "animal", level=1)
-#
-# thomas.add_to_inventory(obj.sword)
-# thomas.add_to_inventory(obj.baseball_bat)
-# thomas.add_to_inventory(obj.metal_helmet)
-# thomas.add_to_inventory(obj.vest)
-# thomas.add_to_inventory(obj.breast_plate)
-# thomas.add_to_inventory(obj.gauntlet)
-# thomas.add_to_inventory(obj.armlet)
-# thomas.add_to_inventory(obj.cuisse)
-# thomas.add_to_inventory(obj.health_potion)
-#
-# thomas.equip(obj.sword)
-# thomas.equip(obj.metal_helmet)
-# thomas.equip(obj.breast_plate)
-# thomas.equip(obj.gauntlet)
-# thomas.equip(obj.armlet)
-# thomas.equip(obj.cuisse)
-# thomas.display_inventory()
-#
-# player_loot_box1 = obj.PlayerLootBox(1, [obj.metal_helmet, obj.scarf, obj.vest], thomas)
-# print(player_loot_box1)
-
-# print(thomas.total_armour())
-# print(rabbit)
-# # print(thomas.weapon)
-# print(thomas)
-
-# print(rabbit)
-# print(thomas)
-# print(thomas.inventory)
-# # rabbit.attack(thomas)
-# # thomas.attack(rabbit)
-# print(thomas.inventory)

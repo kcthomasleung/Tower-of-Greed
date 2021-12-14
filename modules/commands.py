@@ -1,22 +1,21 @@
 import time
 from modules.save_load import save_player
-import modules.characters as characters
-import modules.tower as tower
+from rich import print
+
 
 
 def help():
     print(
         """
     Available commands:
-
+        
+        help: get a list of available commands
         inventory: check your inventory
         equipments: check your equipped items
         location: check your current location
         battle: battle the floor guardian of your current level
-        look: have a look at what is around you
         health: check your health points
-        who: display all the users in the room
-        stats: display game statistics and map of current location
+        stats: display game and player statistics
         save: save your current game progress
         exit: exit the game
         
@@ -143,13 +142,9 @@ def equip(player):
 def equipments(player):
     player.display_equipments()
 
-# def map()
+def health(player):
+    player.display_health()
 
-# def change_gender()
 
 
-# tower = tower.Tower()
-# player = characters.Player("bigboy69", "Thomas", "ADC")
-# print(player)
-# equip(player)
-# battle(player)
+

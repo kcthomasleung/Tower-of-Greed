@@ -1,0 +1,7 @@
+username,name,type,hp,power,gender,weapon,current_location,floor_access 
+shiba,Shiba,Tank,150,2,m,weFists1.0,1a,6 
+equipped armour: 
+-------------inventory------------
+weapon: 
+armour: 
+potion: 
